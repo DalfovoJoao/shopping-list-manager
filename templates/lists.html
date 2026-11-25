@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>My shopping lists</h1>
+<form method="post" class="form-row">
+  <label>List name<input name="name" required placeholder="Weekly groceries"></label>
+  <label>Store<input name="store" placeholder="Optional"></label>
+  <button>Create list</button>
+</form>
+<ul>
+{% for list in lists %}<li><a href="{{ url_for('list_details', list_id=list['id']) }}">{{ list['name'] }}</a> <small>{{ list['store'] }}</small></li>
+{% else %}<li>No lists yet. Create your first list above.</li>{% endfor %}
+</ul>
+{% endblock %}
