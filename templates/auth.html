@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Create account' if mode == 'register' else 'Sign in' }}{% endblock %}
+{% block content %}
+<h1>{{ 'Create account' if mode == 'register' else 'Sign in' }}</h1>
+<form method="post">
+  <label>Username <input type="text" name="username" required minlength="3"></label>
+  <label>Password <input type="password" name="password" required {% if mode == 'register' %}minlength="8"{% endif %}></label>
+  <button>{{ 'Register' if mode == 'register' else 'Sign in' }}</button>
+</form>
+<p>{% if mode == 'register' %}<a href="{{ url_for('login') }}">Already have an account?</a>{% else %}<a href="{{ url_for('register') }}">Create an account</a>{% endif %}</p>
+{% endblock %}
