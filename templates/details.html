@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<p><a href="{{ url_for('lists') }}">← Back to lists</a></p>
+<h1>{{ shopping_list['name'] }}</h1><p>{{ shopping_list['store'] }}</p>
+<h2>Add an item</h2>
+<form action="{{ url_for('add_item', list_id=shopping_list['id']) }}" method="post" class="form-row">
+<label>Item name<input name="name" required placeholder="Milk"></label>
+<label>Barcode (optional)<input name="barcode"></label>
+<label>Quantity<input name="quantity" type="number" min="1" value="1" required></label>
+<label>Unit price (R$)<input name="price" placeholder="12.50" required></label>
+<button>Add</button>
+</form>
+<h2>Items</h2>
+<div class="scroll"><table><thead><tr><th>Item</th><th>Barcode</th><th>Qty</th><th>Price</th><th>Subtotal</th><th></th></tr></thead><tbody>
+{% for item in items %}<tr><td>{{ item['name'] }}</td><td>{{ item['barcode'] }}</td><td>{{ item['quantity'] }}</td><td>R$ {{ '%.2f'|format(item['price_cents']/100) }}</td><td>R$ {{ '%.2f'|format(item['quantity']*item['price_cents']/100) }}</td>
+<td><form action="{{ url_for('delete_item', list_id=shopping_list['id'], item_id=item['id']) }}" method="post"><button class="danger">Remove</button></form></td></tr>
+{% else %}<tr><td colspan="6">No items yet.</td></tr>{% endfor %}
+</tbody></table></div>
+<h2>Total: R$ {{ '%.2f'|format(total) }}</h2>
+{% endblock %}
