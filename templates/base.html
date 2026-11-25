@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Shopping List Manager{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header><a href="{{ url_for('index') }}">🛒 Shopping List Manager</a>
+  {% if session.get('user_id') %}<span>{{ session['username'] }}</span>
+  <form class="inline" action="{{ url_for('logout') }}" method="post"><button>Log out</button></form>{% endif %}
+</header>
+<main>
+{% for message in get_flashed_messages() %}<p class="message">{{ message }}</p>{% endfor %}
+{% block content %}{% endblock %}
+</main>
+</body>
+</html>
